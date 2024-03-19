@@ -1,0 +1,19 @@
+spring:
+    application:
+        name: moon-project
+
+    profiles:
+        active: dev
+    data:
+        web:
+            pageable:
+                default-page-size: 5
+                max-page-size: 10
+    jpa:
+        open-in-view:
+            false
+
+server:
+    error:
+        include-stacktrace: never
+        include-message: never
