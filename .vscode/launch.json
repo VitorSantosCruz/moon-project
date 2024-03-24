@@ -1,0 +1,15 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "DEV - MoonProject",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "br.com.vcruz.MoonProject.MoonProjectApplication",
+      "projectName": "moon-project",
+      "args": [
+        "--spring.profiles.active=dev"
+      ],
+    }
+  ]
+}

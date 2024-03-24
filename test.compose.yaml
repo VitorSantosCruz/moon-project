@@ -1,7 +1,0 @@
-services:
-  mysql:
-    image: "mysql:8.0.36-debian"
-    env_file:
-      - .env.test
-    ports:
-      - "3306:3306"
