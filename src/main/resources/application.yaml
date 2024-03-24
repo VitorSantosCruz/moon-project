@@ -1,19 +1,24 @@
 spring:
-    application:
-        name: moon-project
-
-    profiles:
-        active: dev
-    data:
-        web:
-            pageable:
-                default-page-size: 5
-                max-page-size: 10
-    jpa:
-        open-in-view:
-            false
+  application:
+    name: moon-project
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  profiles:
+    active: dev
+  data:
+    web:
+      pageable:
+        default-page-size: 5
+        max-page-size: 10
+  jpa:
+    open-in-view:
+      false
 
 server:
-    error:
-        include-stacktrace: never
-        include-message: never
+  error:
+    include-stacktrace: never
+    include-message: never
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration-time: ${JWT_EXPIRATION_TIME}

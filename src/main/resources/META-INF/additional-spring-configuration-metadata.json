@@ -1,0 +1,10 @@
+{
+  "properties": [
+    {
+      "name": "jwt.secret"
+    },
+    {
+      "name": "jwt.expiration-time"
+    }
+  ]
+}
