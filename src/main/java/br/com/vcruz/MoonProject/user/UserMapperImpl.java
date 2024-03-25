@@ -23,15 +23,12 @@ public class UserMapperImpl implements UserMapper {
       return null;
     }
 
-    return new User(
-        null,
-        userRequestDto.name(),
-        userRequestDto.password(),
-        userRequestDto.email(),
-        false,
-        false,
-        userRequestDto.roles(),
-        new ArrayList<>());
+    return User.builder()
+        .name(userRequestDto.name())
+        .password(userRequestDto.password())
+        .email(userRequestDto.email())
+        .roles(userRequestDto.roles())
+        .build();
   }
 
   @Override

@@ -17,7 +17,7 @@ import lombok.Data;
 public abstract class AbstractAuditingEntity {
   @CreatedDate
   @Column(nullable = false)
-  private Date createdDate = new Date();
+  private final Date createdDate = new Date();
 
   @LastModifiedDate
   private Date lastModifiedDate;

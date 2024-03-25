@@ -3,6 +3,6 @@ CREATE TABLE `actions`(
   `user_id` BIGINT UNSIGNED,
   `created_date` TIMESTAMP NOT NULL,
   `type` VARCHAR(255) NOT NULL,
-  `details` VARCHAR(255) NOT NULL,
+  `resource` VARCHAR(255) NOT NULL,
   CONSTRAINT `fk_user_actions` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
 )
