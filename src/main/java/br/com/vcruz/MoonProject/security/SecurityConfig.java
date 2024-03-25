@@ -26,7 +26,7 @@ public class SecurityConfig {
 
   @Bean
   public UserDetailsService userDetailsService() {
-    return new UserDetailsServiceImpl();
+    return new MoonUserDetailsService();
   }
 
   @Bean

@@ -13,27 +13,29 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
 @ToString
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "actions")
 public class Action {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private String id;
+  private Long id;
 
   @CreatedDate
   @Column(nullable = false)
-  private Date createdDate = new Date();
+  private final Date createdDate = new Date();
 
   private String type;
 
-  private String details;
+  private String resource;
 
   @ManyToOne(fetch = FetchType.LAZY)
   private User user;

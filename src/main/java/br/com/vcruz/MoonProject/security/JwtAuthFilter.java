@@ -17,7 +17,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.vcruz.MoonProject.exception.ExceptionResponseDto;
-import br.com.vcruz.MoonProject.exception.TokenException;
+import br.com.vcruz.MoonProject.exception.ValidationException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.FilterChain;
@@ -31,7 +31,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
   private JwtService jwtService;
 
   @Autowired
-  private UserDetailsServiceImpl userDetailsServiceImpl;
+  private MoonUserDetailsService userDetailsService;
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -44,7 +44,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
       exceptionResponseDto = new ExceptionResponseDto("jwt.expired", UNAUTHORIZED);
     } catch (UsernameNotFoundException | SignatureException e) {
       exceptionResponseDto = new ExceptionResponseDto("jwt.invalid", UNAUTHORIZED);
-    } catch (TokenException e) {
+    } catch (ValidationException e) {
       exceptionResponseDto = new ExceptionResponseDto(e.getMessage(), UNAUTHORIZED);
     } finally {
       if (exceptionResponseDto != null) {
@@ -68,7 +68,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     String email = null;
 
     if (!request.getRequestURI().contains("/auth/login") && authHeader == null) {
-      throw new TokenException("token.notFound");
+      throw new ValidationException("token.notFound");
     }
 
     if (authHeader != null && authHeader.startsWith("Bearer ")) {
@@ -77,7 +77,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     }
 
     if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-      UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(email);
+      UserDetails userDetails = userDetailsService.loadUserByUsername(email);
       if (jwtService.validateToken(token, userDetails)) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
             userDetails, null, userDetails.getAuthorities());
