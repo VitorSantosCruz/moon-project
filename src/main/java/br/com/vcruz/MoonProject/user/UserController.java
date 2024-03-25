@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.vcruz.MoonProject.exception.NotFoundException;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
@@ -27,7 +31,11 @@ public class UserController {
   @GetMapping("/{id}")
   @ExceptionHandler({ NoSuchElementException.class })
   public UserResponseDto findById(@PathVariable Long id) {
-    var user = userService.findById(id);
+    var user = userService.findById(id)
+        .orElseThrow(() -> {
+          log.error("User {} not found.", id);
+          throw new NotFoundException("user.notFound");
+        });
     var userResponseDto = UserMapper.INSTANCE.userToUserResponseDto(user);
 
     return userResponseDto;
