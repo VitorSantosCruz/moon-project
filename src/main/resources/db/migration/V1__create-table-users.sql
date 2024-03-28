@@ -5,8 +5,8 @@ CREATE TABLE `users`(
   `name` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL UNIQUE,
-  `deleted` BOOLEAN DEFAULT FALSE,
-  `confirmed` BOOLEAN DEFAULT FALSE,
+  `deleted` BOOLEAN NOT NULL DEFAULT FALSE,
+  `confirmed` BOOLEAN NOT NULL DEFAULT FALSE,
   `login_attempts` TINYINT NOT NULL DEFAULT 0,
   `blocked_until` TIMESTAMP
 )

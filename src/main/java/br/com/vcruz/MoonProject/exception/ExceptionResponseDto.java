@@ -13,10 +13,9 @@ import lombok.ToString;
 @Getter
 @ToString
 public class ExceptionResponseDto {
-  @JsonInclude(value = Include.NON_EMPTY)
   String error;
 
-  @JsonInclude(value = Include.NON_NULL)
+  @JsonInclude(Include.NON_NULL)
   Map<String, String> errors;
 
   HttpStatus status;
@@ -26,7 +25,8 @@ public class ExceptionResponseDto {
     this.status = status;
   }
 
-  public ExceptionResponseDto(Map<String, String> errors, HttpStatus status) {
+  public ExceptionResponseDto(String error, Map<String, String> errors, HttpStatus status) {
+    this.error = error;
     this.errors = errors;
     this.status = status;
   }

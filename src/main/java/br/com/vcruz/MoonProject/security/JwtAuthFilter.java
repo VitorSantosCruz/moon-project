@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.vcruz.MoonProject.exception.ExceptionResponseDto;
 import br.com.vcruz.MoonProject.exception.ValidationException;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -42,7 +43,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
       this.checkToken(request, response);
     } catch (ExpiredJwtException e) {
       exceptionResponseDto = new ExceptionResponseDto("jwt.expired", UNAUTHORIZED);
-    } catch (UsernameNotFoundException | SignatureException e) {
+    } catch (UsernameNotFoundException | SignatureException | MalformedJwtException e) {
       exceptionResponseDto = new ExceptionResponseDto("jwt.invalid", UNAUTHORIZED);
     } catch (ValidationException e) {
       exceptionResponseDto = new ExceptionResponseDto(e.getMessage(), UNAUTHORIZED);

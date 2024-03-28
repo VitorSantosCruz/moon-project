@@ -1,8 +1,8 @@
 package br.com.vcruz.MoonProject.user;
 
-import java.util.Set;
+import java.util.List;
 
-import br.com.vcruz.MoonProject.role.Role;
+import br.com.vcruz.MoonProject.role.RoleResponseDto;
 
-public record UserResponseDto(Long id, String name, String email, Set<Role> roles) {
+public record UserResponseDto(Long id, String name, String email, List<RoleResponseDto> roles) {
 }

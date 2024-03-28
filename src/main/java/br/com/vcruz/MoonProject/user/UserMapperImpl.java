@@ -3,6 +3,9 @@ package br.com.vcruz.MoonProject.user;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.vcruz.MoonProject.role.Role;
+import br.com.vcruz.MoonProject.role.RoleResponseDto;
+
 public class UserMapperImpl implements UserMapper {
   @Override
   public UserResponseDto userToUserResponseDto(User user) {
@@ -10,11 +13,17 @@ public class UserMapperImpl implements UserMapper {
       return null;
     }
 
+    List<RoleResponseDto> roles = new ArrayList<>();
+
+    for (var role : user.getRoles()) {
+      roles.add(new RoleResponseDto(role.getId(), role.getName()));
+    }
+
     return new UserResponseDto(
         user.getId(),
         user.getName(),
         user.getEmail(),
-        user.getRoles());
+        roles);
   }
 
   @Override
@@ -23,11 +32,17 @@ public class UserMapperImpl implements UserMapper {
       return null;
     }
 
+    List<Role> roles = new ArrayList<>();
+
+    for (var role : userRequestDto.roles()) {
+      roles.add(new Role(role.id(), null, null));
+    }
+
     return User.builder()
         .name(userRequestDto.name())
         .password(userRequestDto.password())
         .email(userRequestDto.email())
-        .roles(userRequestDto.roles())
+        .roles(roles)
         .build();
   }
 

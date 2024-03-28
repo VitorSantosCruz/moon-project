@@ -14,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.test.context.ActiveProfiles;
 
 import br.com.vcruz.MoonProject.exception.AuthenticationException;
@@ -40,6 +41,8 @@ public class AuthServiceTest {
   private final String VALID_PASSWORD = "root";
   private final String INVALID_EMAIL = "invalid@moon.com.br";;
   private final String INVALID_PASSWORD = "invalid";
+  private final String NOT_CONFIRMED_EMAIL = "not-confirmed@moon.com.br";
+  private final String NOT_CONFIRMED_PASSWORD = "not-confirmed";
 
   private void doInvalidLoginWithTryCatch(AuthRequestDTO invalidAuthDTO) {
     try {
@@ -66,30 +69,30 @@ public class AuthServiceTest {
   @Test
   void shouldBeThrowErrorWhenPassordIsInvalid() {
     var authDto = new AuthRequestDTO(VALID_EMAIL, INVALID_PASSWORD);
-
     var exception = assertThrows(AuthenticationException.class, () -> {
       this.authService.login(authDto);
     });
+
     assertEquals("auth.invalid", exception.getMessage());
   }
 
   @Test
   void shouldBeThrowErrorWhenEmailIsInvalid() {
     var authDto = new AuthRequestDTO(INVALID_EMAIL, VALID_PASSWORD);
-
     var exception = assertThrows(AuthenticationException.class, () -> {
       this.authService.login(authDto);
     });
+
     assertEquals("auth.invalid", exception.getMessage());
   }
 
   @Test
   void shouldBeThrowErrorWhenEmailAndPasswordAreInvalid() {
     var authDto = new AuthRequestDTO(INVALID_EMAIL, INVALID_PASSWORD);
-
     var exception = assertThrows(AuthenticationException.class, () -> {
       this.authService.login(authDto);
     });
+
     assertEquals("auth.invalid", exception.getMessage());
   }
 
@@ -138,5 +141,15 @@ public class AuthServiceTest {
     } else {
       fail("User not be found.");
     }
+  }
+
+  @Test
+  void shouldBeThrowErrorWhenUserEmailNotConfirmed() {
+    var authDto = new AuthRequestDTO(NOT_CONFIRMED_EMAIL, NOT_CONFIRMED_PASSWORD);
+    var exception = assertThrows(InternalAuthenticationServiceException.class, () -> {
+      this.authService.login(authDto);
+    });
+
+    assertEquals("user.notConfirmed", exception.getMessage());
   }
 }
