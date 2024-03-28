@@ -1,6 +1,6 @@
 package br.com.vcruz.MoonProject.entity;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -17,8 +17,8 @@ import lombok.Data;
 public abstract class AbstractAuditingEntity {
   @CreatedDate
   @Column(nullable = false)
-  private final Date createdDate = new Date();
+  private final LocalDateTime createdDate = LocalDateTime.now();
 
   @LastModifiedDate
-  private Date lastModifiedDate;
+  private LocalDateTime lastModifiedDate;
 }

@@ -34,7 +34,7 @@ public class ResponseHandler extends ResponseEntityExceptionHandler {
     ExceptionResponseDto exceptionResponseDto;
 
     if (ex.getErrors() != null) {
-      exceptionResponseDto = new ExceptionResponseDto(ex.getErrors(), BAD_REQUEST);
+      exceptionResponseDto = new ExceptionResponseDto(ex.getMessage(), ex.getErrors(), BAD_REQUEST);
     } else {
       exceptionResponseDto = new ExceptionResponseDto(ex.getMessage(), BAD_REQUEST);
     }

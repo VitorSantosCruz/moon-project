@@ -1,12 +1,12 @@
 package br.com.vcruz.MoonProject.user;
 
-import java.util.Set;
+import java.util.List;
 
-import br.com.vcruz.MoonProject.role.Role;
+import br.com.vcruz.MoonProject.role.RoleRequestDto;
 
 public record UserRequestDto(
     String name,
     String password,
     String email,
-    Set<Role> roles) {
+    List<RoleRequestDto> roles) {
 }

@@ -2,7 +2,6 @@ package br.com.vcruz.MoonProject.user;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 import br.com.vcruz.MoonProject.action.Action;
 import br.com.vcruz.MoonProject.entity.AbstractAuditingEntity;
@@ -13,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -49,9 +49,9 @@ public class User extends AbstractAuditingEntity {
   private LocalDateTime blockedUntil;
 
   @ManyToMany(fetch = FetchType.EAGER)
-  private Set<Role> roles;
+  @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+  private List<Role> roles;
 
-  @JoinColumn(name = "action_id", referencedColumnName = "id", nullable = true)
-  @OneToMany(fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
   private List<Action> actions;
 }

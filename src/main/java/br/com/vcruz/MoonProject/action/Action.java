@@ -1,6 +1,6 @@
 package br.com.vcruz.MoonProject.action;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedDate;
 
@@ -11,6 +11,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,12 +32,13 @@ public class Action {
 
   @CreatedDate
   @Column(nullable = false)
-  private final Date createdDate = new Date();
+  private final LocalDateTime createdDate = LocalDateTime.now();
 
   private String type;
 
   private String resource;
 
   @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id", nullable = true)
   private User user;
 }
